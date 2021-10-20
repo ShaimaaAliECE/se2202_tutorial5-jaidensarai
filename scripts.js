@@ -14,7 +14,7 @@ function createGameBoard()
     let editingTools = 
     `<button id = 'clicker'>[]</button>`;
 
-    let cells = document.querySelectorAll("tr");
+    let cells = document.querySelectorAll("td");
 
     for(let i=0;i<cells.length;i++){
         cells[i].innerHTML = editingTools;
