@@ -4,6 +4,9 @@ let gameActive = true;
 //initialize the game
 
 // use the value stored in the nextPlayer variable to indicate who the next player is
+let indicator = document.querySelector('#next-lbl');
+indicator.innerText = nextPlayer;
+
 
 
 //This call will create the buttons needed for the gameboard.
@@ -11,54 +14,17 @@ createGameBoard()
 
 function createGameBoard()
 {
-    let editingTools = 
-    `<button id = 'clicker'>[]</button>`;
-
+    /*let editingTools = document.createElement("button");
+    editingTools.innerText="[]";
+    //`<button id = 'clicker'>[]</button>`;
+*/
     let cells = document.querySelectorAll("td");
 
-    for(let i=0;i<cells.length;i++){
-        cells[i].innerHTML = editingTools;
+   for(let i=0;i<cells.length;i++){
+        let editingTools = document.createElement("button");
+        editingTools.innerText="[]";
+        cells[i].appendChild(editingTools);
     }
-    /*let btn1 = document.createElement("button");
-    btn1.innerHTML="[]";
-    let c1 = document.getElementsById("c1");
-    c1.appendChild("btn1");
-    
-    let btn2 = document.createElement("button");
-    btn2.innerHTML="[]";
-    let c2 = document.getElementsById("c2");
-    c2.appendChild("btn2");
-
-    let btn3 = document.createElement("button");
-    btn3.innerHTML="[]";
-    let c3 = document.getElementsById("c3");
-    c3.appendChild("btn3");
-
-    let btn4 = document.createElement("button");
-    btn4.innerHTML="[]";
-    let c4 = document.getElementsById("c4");
-    c4.appendChild("btn4");
-
-    let btn5 = document.createElement("button");
-    btn5.innerHTML="[]";
-    let c5 = document.getElementsById("c5");
-    c5.appendChild("btn5");
-
-    let btn6 = document.createElement("button");
-    btn6.innerHTML="[]";
-    let c6 = document.getElementsById("c6");
-    c6.appendChild("btn6");
-   
-    let btn7 = document.createElement("button");
-    btn7.innerHTML="[]";
-    let c7 = document.getElementsById("c7");
-    c7.appendChild("btn7");
-
-    let btn8 = document.createElement("button");
-    btn8.innerHTML="[]";
-    let c8 = document.getElementsById("c8");
-    c8.appendChild("btn8");*/
-    // Programatically add a button with square brackets enclosing an empty space to each cell in the gameboard
 }
 
 // Programatically add 'takeCell' as an event listener to all the buttons on the board
@@ -72,9 +38,23 @@ for (let i=0; i<btns.length; i++)
 // This function will be used to respond to a click event on any of the board buttons.
 function takeCell(event)
 {
-    let clickedBtn = event.target;
+    
 
-    clickedBtn.innerText = nextPlayer;
+
+        let clickedBtn = event.target;
+        clickedBtn.innerText = nextPlayer;
+        clickedBtn.disabled = true;
+        
+
+    if(nextPlayer == 'X'){
+        nextPlayer = '0';
+        indicator.innerText = nextPlayer;
+    }
+    else if(nextPlayer == '0'){
+    nextPlayer = 'X';
+    indicator.innerText = nextPlayer;
+    }
+
     /*
         When the button is clicked, the space inside its square brackets is replaced by the value in the nextPlayer before switching it
     */
@@ -84,6 +64,8 @@ function takeCell(event)
     // Check if the game is over
     if (isGameOver())
     {
+        let gg = document.querySelector('#game-over-lbl');
+        gg.innerHTML = '<h1> Game Over </h1>';
         // let the lable with the id 'game-over-lbl' display the words 'Game Over' inside <h1> element
     }
 
@@ -92,6 +74,17 @@ function takeCell(event)
 
 function isGameOver()
 {
-    // This function returns true if all the buttons are disabled and false otherwise 
+    let counter = 0;
+    let btns = document.querySelectorAll('button');
+    for (let i=0; i <btns.length;i++){
+        if (btns[i].disabled == true){
+           counter = counter +1; 
+        }
+    }
+    if (counter == 9)
+    return true;
+    else
+    return false;
+        // This function returns true if all the buttons are disabled and false otherwise 
    
 }
